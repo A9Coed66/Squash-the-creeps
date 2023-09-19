@@ -1,0 +1,27 @@
+Kiểm soát tác động vật lý
+Vật thể vật lý gồm 2 thuộc tính bổ sung:
+	Layers: xác định lớp đối tượng thuộc
+	Mask: các Layers có thể tương tác
+	VD:	Sàn thuộc lớp sàn, Player thuộc lớp player, Kẻ địch thuộc lớp enemies 
+	Sàn không cần tương tác với vật thể nào: trống Mask
+	Player có tương tác với sàn và có tương tác với enemy khi va chạm nên: mask (sàn, enemies)
+	Enemy để tránh va chạm rồi chặn đường nhau ta sẽ không cho các enemy va chạm với nhau: mask trống
+	
+Để tạo ground (static3D) thì cần có Collision (vùng va chạm) và mesh (xác định vật thể)
+
+Marker3D: Generation 3D position hint for editing -> Tạo vị trí cho Camera3D
+
+VisibleOnScreenNotifier3D: Tạo ra 1 khung trả lại thông tin vật thể còn nhìn thấy ở màn hình không
+Ứng dụng: _on_visible_on_screen_notifier_3d_screen_exited(): queue_free() -> Nếu vật thể không ở màn hình thì xóa
+
+Hàm rotate vật thể hướng tới đối tượng mới:
+	#rotate hướng tới player
+	#up - để vật thể ngửa
+	look_at_from_position(start_position, player_position, Vector3.UP)
+Cũ:
+	var direction = mob.position.direction_to($Player.position).angle()
+	mob.rotation = direction
+
+Sử dụng get_slide_collision_count() và get_slide_collision() để chỉ đích thị các va chạm xảy ra lúc goi hàm
+
+Các sử dụng hàm emit để truyền tín hiệu
